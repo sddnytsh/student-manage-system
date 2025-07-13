@@ -1,24 +1,20 @@
-# student-manage-system
+# 学生管理系统
 
-## Project setup
-```
-npm install
-```
+## 功能
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+### 登录
+登录
 
-### Compiles and minifies for production
-```
-npm run build
-```
+### 学生管理
 
-### Lints and fixes files
-```
-npm run lint
-```
+#### 个人信息
+个人信息增删改查
+照片上传
+#### 课表
+课表展示查询
+#### 成绩
+学生成绩增删改查
+录入和导出
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+### 权限控制
+角色：管理员、教师、学生
