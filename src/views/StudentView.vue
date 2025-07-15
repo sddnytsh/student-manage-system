@@ -5,16 +5,16 @@
         </div>
         <div></div>
         <div class="person">
-            <img src="/images/default-avatar.png" class="avatar"> <!-- 更换头像逻辑未处理 -->
+            <img src="/images/default-avatar.png" class="avatar" alt="头像"> <!-- 更换头像逻辑未处理 -->
             <div class="dropdown-box">
-                <span class="dropdown-item"><ion-icon name="person-circle-outline"></ion-icon>个人资料</span> <!--个人资料逻辑未处理-->
+                <span class="dropdown-item" @click="openProfile"><ion-icon name="person-circle-outline"></ion-icon>个人资料</span>
                 <span class="dropdown-item"><ion-icon name="moon-outline"></ion-icon>切换主题</span> <!-- 切换主题逻辑未处理 -->
-                <span class="dropdown-iten"><ion-icon name="settings-outline"></ion-icon>设置</span> <!-- 设置逻辑未处理 -->
+                <span class="dropdown-iten" @click="openSettings"><ion-icon name="settings-outline"></ion-icon>设置</span>
                 <span class="dropdown-item" @click="logout"><ion-icon name="log-out-outline"></ion-icon>退出登录</span>
             </div>
         </div>
     </div>
-    <div class="aside"> <!--当前所处router-link变色未处理-->
+    <div class="aside">
         <router-link to="/student/home" class="aside-item">
             <ion-icon name="home-sharp"></ion-icon>
             <span>首页</span>
@@ -28,7 +28,7 @@
         <transition>
             <div v-show="isActive" class="sub-menu">
                 <router-link to="/student/courses" class="sub-item">
-                    <ion-icon name="stats-chart-sharp"></ion-icon>
+                    <ion-icon name="calendar-sharp"></ion-icon>
                     <span>课程</span>
                 </router-link>
                 <router-link to="/student/grades" class="sub-item">
@@ -41,10 +41,41 @@
                 </router-link>
             </div>
         </transition>
-        <router-link to="/student/chatToUs" class="aside-item"><ion-icon name="hammer-sharp"></ion-icon><span>联系我们</span></router-link>
+        <router-link to="/student/contact" class="aside-item"><ion-icon name="hammer-sharp"></ion-icon><span>联系我们</span></router-link>
     </div>
     <div class="main">
         <router-view></router-view>
+    </div>
+    <div class="cover1"  v-show="showSettings">
+        <div class="settings">
+            <span class="close" @click="closeSettings"><ion-icon name="close-outline"></ion-icon></span>
+            <div class="container">
+                <!-- 头像、姓名、性别、修改密码、退出登录 -->
+                <h1>设置</h1>
+                <div class="setting-item">
+                    <span>头像</span>
+                    <span @click="openPreview"><img src="/images/default-avatar.png" alt="头像"></span>
+                </div>
+                <div class="setting-item">
+                    <span>姓名</span>
+                    <span>张三</span>
+                </div>
+                <div class="setting-item">
+                    <span>性别</span>
+                    <span>男</span>
+                </div>
+                <div class="setting-item"> <!-- 密码显示和隐藏功能未实现 -->
+                    <span>修改密码</span>
+                    <span></span>
+                </div>
+                <button @click="logout">退出登录<ion-icon name="log-out-outline"></ion-icon></button>
+            </div>
+        </div>
+    </div>
+    <div class="cover2" v-show="showPreview" @click="closePreview">
+        <div>
+            <img src="/images/default-avatar.png" alt="头像">
+        </div>
     </div>
 </template>
 <script>
@@ -52,7 +83,9 @@ export default {
   name: 'StudentView',
   data () {
     return {
-      isActive: false
+      isActive: false,
+      showSettings: false,
+      showPreview: false
     }
   },
   methods: {
@@ -61,6 +94,21 @@ export default {
     },
     changeStatus () {
       this.isActive = !this.isActive;
+    },
+    openProfile () {
+      this.$router.push('/student/profile');
+    },
+    openSettings () {
+      this.showSettings = true;
+    },
+    closeSettings () {
+      this.showSettings = false;
+    },
+    openPreview () {
+      this.showPreview = true;
+    },
+    closePreview () {
+      this.showPreview = false;
     }
   }
 };
@@ -194,6 +242,10 @@ export default {
         &:hover {
             background-color: #f0f0f0;
         }
+
+        &.router-link-active {
+            background-color: #d0d0d0;
+        }
     }
 
     .sub-menu {
@@ -225,6 +277,10 @@ export default {
             &:hover {
                 background-color: #f0f0f0;
             }
+
+            &.router-link-active {
+                background-color: #d0d0d0;
+            }
         }
     }
 }
@@ -232,8 +288,135 @@ export default {
 .main {
     position: absolute;
     top: 70px;
-    left: 200px;
+    left: 220px;
     width: calc(100% - 220px);
     height: calc(100% - 70px);
+}
+
+.cover1 {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 2;
+
+    .settings {
+        position: absolute;
+        max-width: 600px;
+        min-width: 400px;
+        width: 88%;
+        height: 440px;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: #fff;
+
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 30px;
+            cursor: pointer;
+        }
+
+        .container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: start;
+            align-items: center;
+            padding: 20px;
+            box-sizing: border-box;
+
+            h1 {
+                margin: 8px;
+                font-size: 32px;
+            }
+
+            .setting-item {
+                width: 100%;
+                height: 60px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                box-sizing: border-box;
+                padding: 0 20px;
+                border-bottom: 1px solid #ccc;
+                font-size: 20px;
+
+                span {
+                    &:first-child {
+                        text-align: start;
+                    }
+
+                    &:last-child {
+                        text-align: end;
+                        color: #777;
+                    }
+
+                    img {
+                        width: 60px;
+                        height: 60px;
+                        border-radius: 50%;
+                        object-fit: cover;
+                    }
+                }
+
+                &:nth-child(2) {
+                    height: 80px;
+                    border-top: 1px solid #ccc;
+                }
+            }
+
+            button {
+                width: 120px;
+                height: 48px;
+                background-color: rgb(235, 81, 81);
+                border-radius: 10px;
+                border: none;
+                font-size: 18px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                position: absolute;
+                bottom: 26px;
+                left: 50%;
+                transform: translateX(-50%);
+
+                ion-icon {
+                    margin-left: 8px;
+                    font-size: 20px;
+                }
+            }
+        }
+    }
+}
+
+.cover2 {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 3;
+
+    div {
+        width: 400px;
+        height: 400px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    }
 }
 </style>

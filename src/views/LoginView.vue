@@ -10,7 +10,7 @@
                 </div>
                 <form @submit.prevent="goToHome">
                     <input type="text" class="account" placeholder="账号" required v-model="account">
-                    <input type="text" class="password" placeholder="密码" required v-model="password">
+                    <input type="password" class="password" placeholder="密码" required v-model="password">
                     <button type="submit" @click="goToHome">登录</button>
                     <button type="button" id="forget">忘记密码</button>
                 </form>
