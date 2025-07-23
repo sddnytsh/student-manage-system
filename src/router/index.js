@@ -24,6 +24,7 @@ const routes = [
       { path: 'grades', component: () => import('@/views/StudentGradesView.vue') },
       { path: 'grab', component: () => import('@/views/StudentGrabView.vue') },
       { path: 'profile', component: () => import('@/views/StudentProfileView.vue') },
+      { path: 'forum', component: () => import('@/views/StudentForumView.vue') },
       { path: 'contact', component: () => import('@/views/ContactView.vue') }
     ]
   }

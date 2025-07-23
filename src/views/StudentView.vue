@@ -41,12 +41,16 @@
                         <span>成绩</span>
                     </router-link>
                     <router-link to="/student/grab" class="sub-item">
-                        <ion-icon name="file-tray-full-outline"></ion-icon>
+                        <ion-icon name="file-tray-full-sharp"></ion-icon>
                         <span>抢课</span>
                     </router-link>
                     <router-link to="/student/profile" class="sub-item">
                         <ion-icon name="body-sharp"></ion-icon>
                         <span>个人信息</span>
+                    </router-link>
+                    <router-link to="/student/forum" class="sub-item">
+                        <ion-icon name="chatbubbles-sharp"></ion-icon>
+                        <span>虎踞龙蟠</span>
                     </router-link>
                 </div>
             </transition>
@@ -290,7 +294,7 @@ export default {
 
     .sub-menu {
         width: 100%;
-        height: 200px;
+        height: 250px;
         display: flex;
         flex-direction: column;
         justify-content: start;
