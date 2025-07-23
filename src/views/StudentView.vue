@@ -1,80 +1,91 @@
 <template>
-    <div class="header">
-        <div class="logo">
-            <img src="/images/logo1.png">
-        </div>
-        <div></div>
-        <div class="person">
-            <img src="/images/default-avatar.png" class="avatar" alt="头像"> <!-- 更换头像逻辑未处理 -->
-            <div class="dropdown-box">
-                <span class="dropdown-item" @click="openProfile"><ion-icon name="person-circle-outline"></ion-icon>个人资料</span>
-                <span class="dropdown-item"><ion-icon name="moon-outline"></ion-icon>切换主题</span> <!-- 切换主题逻辑未处理 -->
-                <span class="dropdown-iten" @click="openSettings"><ion-icon name="settings-outline"></ion-icon>设置</span>
-                <span class="dropdown-item" @click="logout"><ion-icon name="log-out-outline"></ion-icon>退出登录</span>
+    <div :class="themeClass">
+        <div class="header">
+            <div class="logo">
+                <img src="/images/logo1.png">
+            </div>
+            <div></div>
+            <div class="person">
+                <img src="/images/default-avatar.png" class="avatar" alt="头像"> <!-- 更换头像逻辑未处理 -->
+                <div class="dropdown-box">
+                    <span class="dropdown-item" @click="openProfile"><ion-icon
+                            name="person-circle-outline"></ion-icon>个人资料</span>
+                    <span class="dropdown-item" @click="changeTheme"><ion-icon
+                            name="moon-outline"></ion-icon>切换主题</span>
+                    <span class="dropdown-iten" @click="openSettings"><ion-icon
+                            name="settings-outline"></ion-icon>设置</span>
+                    <span class="dropdown-item" @click="logout"><ion-icon
+                            name="log-out-outline"></ion-icon>退出登录</span>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="aside">
-        <router-link to="/student/home" class="aside-item">
-            <ion-icon name="home-sharp"></ion-icon>
-            <span>首页</span>
-        </router-link>
-        <div class="aside-item" @click="changeStatus">
-            <ion-icon name="body-sharp"></ion-icon>
-            <span>学生管理</span>
-            <ion-icon class="arrow" name="chevron-back-outline" v-if="!isActive"></ion-icon>
-            <ion-icon class="arrow" name="chevron-down-outline" v-else></ion-icon>
-        </div>
-        <transition>
-            <div v-show="isActive" class="sub-menu">
-                <router-link to="/student/courses" class="sub-item">
-                    <ion-icon name="calendar-sharp"></ion-icon>
-                    <span>课程</span>
-                </router-link>
-                <router-link to="/student/grades" class="sub-item">
-                    <ion-icon name="stats-chart-sharp"></ion-icon>
-                    <span>成绩</span>
-                </router-link>
-                <router-link to="/student/profile" class="sub-item">
-                    <ion-icon name="body-sharp"></ion-icon>
-                    <span>个人信息</span>
-                </router-link>
+        <div class="aside">
+            <router-link to="/student/home" class="aside-item">
+                <ion-icon name="home-sharp"></ion-icon>
+                <span>首页</span>
+            </router-link>
+            <div class="aside-item" @click="changeStatus">
+                <ion-icon name="body-sharp"></ion-icon>
+                <span>学生管理</span>
+                <ion-icon class="arrow" name="chevron-back-outline" v-if="!isActive"></ion-icon>
+                <ion-icon class="arrow" name="chevron-down-outline" v-else></ion-icon>
             </div>
-        </transition>
-        <router-link to="/student/contact" class="aside-item"><ion-icon name="hammer-sharp"></ion-icon><span>联系我们</span></router-link>
-    </div>
-    <div class="main">
-        <router-view></router-view>
-    </div>
-    <div class="cover1"  v-show="showSettings">
-        <div class="settings">
-            <span class="close" @click="closeSettings"><ion-icon name="close-outline"></ion-icon></span>
-            <div class="container">
-                <!-- 头像、姓名、性别、修改密码、退出登录 -->
-                <h1>设置</h1>
-                <div class="setting-item">
-                    <span>头像</span>
-                    <span @click="openPreview"><img src="/images/default-avatar.png" alt="头像"></span>
+            <transition>
+                <div v-show="isActive" class="sub-menu">
+                    <router-link to="/student/courses" class="sub-item">
+                        <ion-icon name="calendar-sharp"></ion-icon>
+                        <span>课表</span>
+                    </router-link>
+                    <router-link to="/student/grades" class="sub-item">
+                        <ion-icon name="stats-chart-sharp"></ion-icon>
+                        <span>成绩</span>
+                    </router-link>
+                    <router-link to="/student/grab" class="sub-item">
+                        <ion-icon name="file-tray-full-outline"></ion-icon>
+                        <span>抢课</span>
+                    </router-link>
+                    <router-link to="/student/profile" class="sub-item">
+                        <ion-icon name="body-sharp"></ion-icon>
+                        <span>个人信息</span>
+                    </router-link>
                 </div>
-                <div class="setting-item">
-                    <span>姓名</span>
-                    <span>张三</span>
+            </transition>
+            <router-link to="/student/contact" class="aside-item"><ion-icon
+                    name="hammer-sharp"></ion-icon><span>联系我们</span></router-link>
+        </div>
+        <div class="main">
+            <router-view></router-view>
+        </div>
+        <div class="cover1" v-show="showSettings">
+            <div class="settings">
+                <span class="close" @click="closeSettings"><ion-icon name="close-outline"></ion-icon></span>
+                <div class="container">
+                    <!-- 头像、姓名、性别、修改密码、退出登录 -->
+                    <h1>设置</h1>
+                    <div class="setting-item">
+                        <span>头像</span>
+                        <span @click="openPreview"><img src="/images/default-avatar.png" alt="头像"></span>
+                    </div>
+                    <div class="setting-item">
+                        <span>姓名</span>
+                        <span>张三</span>
+                    </div>
+                    <div class="setting-item">
+                        <span>性别</span>
+                        <span>男</span>
+                    </div>
+                    <div class="setting-item"> <!-- 密码显示和隐藏功能未实现 -->
+                        <span>修改密码</span>
+                        <span></span>
+                    </div>
+                    <button @click="logout">退出登录<ion-icon name="log-out-outline"></ion-icon></button>
                 </div>
-                <div class="setting-item">
-                    <span>性别</span>
-                    <span>男</span>
-                </div>
-                <div class="setting-item"> <!-- 密码显示和隐藏功能未实现 -->
-                    <span>修改密码</span>
-                    <span></span>
-                </div>
-                <button @click="logout">退出登录<ion-icon name="log-out-outline"></ion-icon></button>
             </div>
         </div>
-    </div>
-    <div class="cover2" v-show="showPreview" @click="closePreview">
-        <div>
-            <img src="/images/default-avatar.png" alt="头像">
+        <div class="cover2" v-show="showPreview" @click="closePreview">
+            <div>
+                <img src="/images/default-avatar.png" alt="头像">
+            </div>
         </div>
     </div>
 </template>
@@ -85,7 +96,16 @@ export default {
     return {
       isActive: false,
       showSettings: false,
-      showPreview: false
+      showPreview: false,
+      theme: 'light'
+    }
+  },
+  computed: {
+    themeClass () {
+      return {
+        'theme-light': this.theme === 'light',
+        'theme-dark': this.theme === 'dark'
+      };
     }
   },
   methods: {
@@ -109,15 +129,35 @@ export default {
     },
     closePreview () {
       this.showPreview = false;
+    },
+    changeTheme () {
+      this.theme = this.theme === 'light' ? 'dark' : 'light';
+      localStorage.setItem('theme', this.theme);
     }
+  },
+  mounted () {
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    this.changeTheme(savedTheme);
   }
 };
 </script>
 <style scoped lang="scss">
+.theme-light {
+  --header-bg: #0bb9c5;
+  --sidebar-bg: #2f4050;
+  --menu-text: #ffffff;
+}
+
+.theme-dark {
+  --header-bg: #333333;
+  --sidebar-bg: #1e1e1e;
+  --menu-text: #ffffff;
+}
+
 .header {
     width: 100%;
     height: 70px;
-    background-color: rgb(11, 185, 197);
+    background-color: var(--header-bg);
     position: fixed;
     top: 0;
     left: 0;
@@ -214,7 +254,7 @@ export default {
     justify-content: start;
     align-items: center;
     border-right: #000 solid 1px;
-    background-color: rgb(47, 64, 80);
+    background-color: var(--sidebar-bg);
 
     .aside-item {
         width: 100%;
@@ -222,7 +262,7 @@ export default {
         text-align: start;
         line-height: 54px;
         padding-left: 20px;
-        color: #000;
+        color: var(--menu-text);
         text-decoration: none;
         font-size: 18px;
         display: flex;
@@ -240,17 +280,17 @@ export default {
         }
 
         &:hover {
-            background-color: #f0f0f0;
+            background-color: rgba(255, 255, 255, 0.1);
         }
 
         &.router-link-active {
-            background-color: #d0d0d0;
+            background-color: rgba(255, 255, 255, 0.2);
         }
     }
 
     .sub-menu {
         width: 100%;
-        height: 150px;
+        height: 200px;
         display: flex;
         flex-direction: column;
         justify-content: start;
@@ -262,7 +302,7 @@ export default {
             text-align: start;
             line-height: 50px;
             padding-left: 40px;
-            color: #000;
+            color: var(--menu-text);
             text-decoration: none;
             font-size: 16px;
             display: flex;
@@ -275,11 +315,11 @@ export default {
             }
 
             &:hover {
-                background-color: #f0f0f0;
+                background-color: rgba(255, 255, 255, 0.1);
             }
 
             &.router-link-active {
-                background-color: #d0d0d0;
+                background-color: rgba(255, 255, 255, 0.2);
             }
         }
     }
@@ -291,6 +331,7 @@ export default {
     left: 220px;
     width: calc(100% - 220px);
     height: calc(100% - 70px);
+    overflow: auto;
 }
 
 .cover1 {

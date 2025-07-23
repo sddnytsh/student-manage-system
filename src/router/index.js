@@ -22,6 +22,7 @@ const routes = [
       { path: 'home', component: () => import('@/views/StudentHomeView.vue') },
       { path: 'courses', component: () => import('@/views/StudentCoursesView.vue') },
       { path: 'grades', component: () => import('@/views/StudentGradesView.vue') },
+      { path: 'grab', component: () => import('@/views/StudentGrabView.vue') },
       { path: 'profile', component: () => import('@/views/StudentProfileView.vue') },
       { path: 'contact', component: () => import('@/views/ContactView.vue') }
     ]
